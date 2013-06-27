@@ -108,8 +108,13 @@ if [ "${computerSecureName}" = "${listAllRecords}" ]; then
 fi
 
 # Add to casperimage_corp
-dscl /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembers ${computerSecureName} -u ${odAdmin} -p ${odPassword}
-dscl /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembership ${computerSecureName} -u ${odAdmin} -p ${odPassword}
+
+#NewVariable - Generated UID
+generatedUID=`dscl /LDAPv3/${domain} -read /Computers/${computerSecureName} GeneratedUID | awk '{ print $2 }'`
+
+#dscl /LDAPv3/${domain} -append ComputerLists/${computerGroup} Computers ${computerSecureName} -u ${odAdmin} -P ${odPassword}
+dscl -u ${odAdmin} -P ${odPassword} /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembers ${generatedUID}
+#dscl /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembership ${computerSecureName} -u ${odAdmin} -p ${odPassword}
 
 echo "Have a Nice Day :)"
 
