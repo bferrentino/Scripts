@@ -112,9 +112,9 @@ fi
 #NewVariable - Generated UID
 generatedUID=`dscl /LDAPv3/${domain} -read /Computers/${computerSecureName} GeneratedUID | awk '{ print $2 }'`
 
-#dscl /LDAPv3/${domain} -append ComputerLists/${computerGroup} Computers ${computerSecureName} -u ${odAdmin} -P ${odPassword}
 dscl -u ${odAdmin} -P ${odPassword} /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembers ${generatedUID}
-#dscl /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembership ${computerSecureName} -u ${odAdmin} -p ${odPassword}
+dscl -u ${odAdmin} -P ${odPassword} /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembership ${computerSecureName}
+dscl -u ${odAdmin} -P ${odPassword} /LDAPv3/${domain} -append ComputerLists/${computerGroup} Computers ${computerSecureName}
 
 echo "Have a Nice Day :)"
 
