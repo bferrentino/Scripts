@@ -26,8 +26,6 @@ computerName=`networksetup -getcomputername`
 computerSecureName=$computerName$
 check4OD=`dscl localhost -list /LDAPv3`
 check4BadODacct=`dscl /LDAPv3/${domain} -read Computers/${computerName} RecordName | awk '{ print $2 }'`
-listAllRecords=`dscl /LDAPv3/${domain} -search /Computers ENetAddress ${nicAddress} | awk ' { print $1 } ' | sed -e '/)/d' -e '/:/d'`
-falseENet=`dscl /LDAPv3/${domain} -search /Computers ENetAddress ${nicAddress} | awk ' { print $1 } ' | sed -e '/)/d' -e '/:/d' | grep -wv ${computerSecureName} | sed -n 1p`
 
 # FIRST OD check
 if [ "${check4OD}" == "${domain}" ]; then
@@ -85,6 +83,10 @@ fi
 fi
 fi
 fi
+
+# Post bind variables
+listAllRecords=`dscl /LDAPv3/${domain} -search /Computers ENetAddress ${nicAddress} | awk ' { print $1 } ' | sed -e '/)/d' -e '/:/d'`
+falseENet=`dscl /LDAPv3/${domain} -search /Computers ENetAddress ${nicAddress} | awk ' { print $1 } ' | sed -e '/)/d' -e '/:/d' | grep -wv ${computerSecureName} | sed -n 1p`
 
 # Check for matching ENetAddress and non-matching records
 if [ "${computerSecureName}" != "${listAllRecords}" ]; then
