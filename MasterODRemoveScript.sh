@@ -4,21 +4,21 @@
 # Updated 06/25/13 by Ben Ferrentino and Jared Egenes for NASCAR
 # dogs > cats
 
-# Static variables - NASCAR OD
+# Static variables - Enter your information here
 # OD Admin
-odAdmin="diradmin"
+odAdmin=""
 # OD Admin PW
-odPassword="Enigma2011"
+odPassword=""
 # FQDN of OD domain
-domain="clt-od-srv1.nascar.com"
+domain=""
 # Invaild OD address
-badDomain1="CLT-OD-SRV1.nascar.com"
+badDomain1=""
 # Invaild OD address
-badDomain2="clt-od-srv1"
+badDomain2=""
 # Invaild OD address
-badDomain3="CLT-OD-SRV1"
+badDomain3=""
 # Primary OD group
-computerGroup=casperimage_corp
+computerGroup=""
 
 # variables
 nicAddress=`ifconfig en0 | grep ether | awk '{print $2}'`
@@ -95,14 +95,11 @@ if [ "${computerSecureName}" != "${listAllRecords}" ]; then
 fi
 
 # Another Check
-if [ "${computerSecureName}" = "${listAllRecords}" ]; then
-        echo "BAM - We're g2g"
-else if [ "${computerSecureName}" != "${listAllRecords}" ]; then
+if [ "${computerSecureName}" != "${listAllRecords}" ]; then
         echo "Crap - we've got another one"
                 dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
                 sleep 10
         echo "Removed as well"
-fi
 fi
 
 # Last Check
