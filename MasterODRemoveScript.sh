@@ -92,11 +92,13 @@ if [ "${computerSecureName}" != "${listAllRecords}" ]; then
                 dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
                 sleep 3
         echo "Deleted that sucker"
+fi
 
 # Another Check
-else if [ "${computerSecureName}" = "${listAllRecords}" ]; then
+if [ "${computerSecureName}" = "${listAllRecords}" ]; then
         echo "BAM - We're g2g"
-        else echo "Crap - we've got another one"
+else if [ "${computerSecureName}" != "${listAllRecords}" ]; then
+        echo "Crap - we've got another one"
                 dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
         echo "Removed as well"
 fi
