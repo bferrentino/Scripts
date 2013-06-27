@@ -71,31 +71,34 @@ fi
 fi
 
 # Check for matching ENetAddress and non-matching records
-if [ "${computerSecureName}" = "${listAllRecords}" ]; then
-        echo "BAM - We're g2g"
-
-# Another Check
-else if [ "${computerSecureName}" != "${listAllRecords}" ]; then
+if [ "${computerSecureName}" != "${listAllRecords}" ]; then
         echo "Oh snap - Found something off!"
         dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
+        sleep 3
         echo "Deleted that sucker"
 
 # Another Check
-#else if [ "${computerSecureName}" != "${listAllRecords}" ]; then
-#        echo "Oh snap - Found something off!"
-#        else dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
+else if [ "${computerSecureName}" = "${listAllRecords}" ]; then
+        echo "BAM - We're g2g"
+fi
+fi
 
+# Check for matching ENetAddress and non-matching records - round 2
+if [ "${computerSecureName}" != "${listAllRecords}" ]; then
+        echo "Oh snap - Found something off!"
+        dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
+        sleep 3
+        echo "Deleted that sucker"
 # Another Check
-#else if [ "${computerSecureName}" != "${listAllRecords}" ]; then
-#        echo "Oh snap - Found something off!"
-#        else dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
-# Note we don't know how to make this a loop yet... 
-#fi
-#fi
+else if [ "${computerSecureName}" = "${listAllRecords}" ]; then
+        echo "BAM - We're g2g"
 fi
 fi
+
 
 # Add to casperimage_corp
+dscl /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembers ${computerSecureName} -u ${odAdmin} -p ${odPassword}
+dscl /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembership ${computerSecureName} -u ${odAdmin} -p ${odPassword}
 
 echo "Have a Nice Day :)"
 
