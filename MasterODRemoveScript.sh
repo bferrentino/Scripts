@@ -89,27 +89,19 @@ fi
 # Check for matching ENetAddress and non-matching records
 if [ "${computerSecureName}" != "${listAllRecords}" ]; then
         echo "Oh snap - Found something off!"
-        dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
-        sleep 3
+                dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
+                sleep 3
         echo "Deleted that sucker"
 
 # Another Check
 else if [ "${computerSecureName}" = "${listAllRecords}" ]; then
         echo "BAM - We're g2g"
+        else echo "Crap - we've got another one"
+                dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
+        echo "Removed as well"
 fi
 fi
 
-# Check for matching ENetAddress and non-matching records - round 2
-if [ "${computerSecureName}" != "${listAllRecords}" ]; then
-        echo "Oh snap - Found something off!"
-        dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
-        sleep 3
-        echo "Deleted that sucker"
-# Another Check
-else if [ "${computerSecureName}" = "${listAllRecords}" ]; then
-        echo "BAM - We're g2g"
-fi
-fi
 
 
 # Add to casperimage_corp
