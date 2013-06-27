@@ -90,7 +90,7 @@ fi
 if [ "${computerSecureName}" != "${listAllRecords}" ]; then
         echo "Oh snap - Found something off!"
                 dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
-                sleep 3
+                sleep 10
         echo "Deleted that sucker"
 fi
 
@@ -100,11 +100,15 @@ if [ "${computerSecureName}" = "${listAllRecords}" ]; then
 else if [ "${computerSecureName}" != "${listAllRecords}" ]; then
         echo "Crap - we've got another one"
                 dscl /LDAPv3/${domain} -delete /Computers/${falseENet}
+                sleep 10
         echo "Removed as well"
 fi
 fi
 
-
+# Last Check
+if [ "${computerSecureName}" = "${listAllRecords}" ]; then
+        echo "BAM - We're g2g"
+fi
 
 # Add to casperimage_corp
 dscl /LDAPv3/${domain} -append ComputerGroups/${computerGroup} GroupMembers ${computerSecureName} -u ${odAdmin} -p ${odPassword}
