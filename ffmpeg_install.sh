@@ -6,6 +6,10 @@
 # Created by Hunter Ford.
 # modified by Ben Ferrentino on 8/7/2013.
 #
+# This script requires XCode and the Command Line Tools be installed to any machine deploying. 
+
+# In the event you have a mac from pre-10.8 you will need to set the compiler, uncomment the line to set. 
+# export CC=clang
 
 #Directories to install and pull installs to - setting the terms.
 SOURCES="/tmp/ffmpeg"
@@ -71,10 +75,10 @@ CFLAGS="-I. -fno-common -read_only_relocs suppress" ./configure --enable-pic --e
 cd xvidcore/build/generic
 ./configure --disable-assembly && make -j 4 && sudo make install; cd ../../..
 
-# For Lion, we have to change which compiler to use (--cc=clang).
+# For Lion, we have to change which compiler to use. Uncomment line 12. 
 # If you're building on Snow Leopard, you can omit this flag so it defaults to gcc.
 cd ffmpeg-*/
-CFLAGS="-DHAVE_LRINTF" ./configure --enable-nonfree --enable-gpl --enable-version3 --enable-postproc --enable-swscale --enable-avfilter --enable-libmp3lame --enable-libvorbis --enable-libtheora --enable-libfaac --enable-libxvid --enable-libx264 --enable-libvpx --enable-hardcoded-tables --enable-shared --enable-pthreads --disable-indevs --cc=clang && make -j 4 && sudo make install
+CFLAGS="-DHAVE_LRINTF" ./configure --enable-nonfree --enable-gpl --enable-version3 --enable-postproc --enable-swscale --enable-avfilter --enable-libmp3lame --enable-libvorbis --enable-libtheora --enable-libfaac --enable-libxvid --enable-libx264 --enable-libvpx --enable-hardcoded-tables --enable-shared --enable-pthreads --disable-indevs && make -j 4 && sudo make install
 
 # --enable-libvo-amrwbenc
 
