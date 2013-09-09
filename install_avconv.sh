@@ -43,7 +43,11 @@ cp -R Xcode.app /Applications
 cd ${INSTDIR}
 diskutil unmount /Volumes/Xcode
 
-# command line tool installer (10.8)
+# command line tool installer (10.8, mountain lion)
 
 hdiutil attach xcode462_cltools_10_86938259a.dmg
+installer -pkg '/Volumes/Command\ Line\ Tools\ \(Mountain\ Lion\)/Command\ Line\ Tools\ \(Mountain\ Lion\).mpkg' -target /
+diskutil unmount '/Volumes/Command\ Line\ Tools\ \(Mountain\ Lion\)'
 
+
+exit
